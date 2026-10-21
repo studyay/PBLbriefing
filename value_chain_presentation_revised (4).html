@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>배움이 결과물이 되는 교육</title>
+<style>
+:root{--ink:#17191d;--muted:#656b75;--navy:#18324b;--line:#dfe3e8;--paper:#fbfbfa;--white:#fff}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;background:#111;color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+body{display:grid;place-items:center;overflow:hidden}
+/* 세로형 모바일 프레젠테이션: 9:16 */
+#deck{width:min(100vw,56.25vh);height:min(100vh,177.7778vw);position:relative;background:var(--paper);overflow:hidden;box-shadow:0 20px 80px #0005;container-type:size}
+.slide{position:absolute;inset:0;padding:7.2% 8.2% 6.4%;display:flex;flex-direction:column;opacity:0;transform:translateX(24px);pointer-events:none;transition:opacity .32s ease,transform .32s ease}
+.slide.active{opacity:1;transform:translateX(0);pointer-events:auto}
+.kicker{font-size:clamp(10px,1vw,15px);letter-spacing:.16em;text-transform:uppercase;color:var(--navy);font-weight:750;margin-bottom:3.2%}
+h1,h2,p{margin:0}
+h1{font-size:clamp(30px,4.4vw,64px);line-height:1.15;letter-spacing:-.055em;font-weight:780;max-width:1000px}
+h2{font-size:clamp(26px,3.25vw,48px);line-height:1.18;letter-spacing:-.045em;font-weight:760;max-width:1000px}
+.lead{font-size:clamp(14px,1.35vw,20px);line-height:1.65;color:#424852;margin-top:2.2%;max-width:850px}
+.rule{width:54px;height:4px;background:var(--navy);margin:3.4% 0}
+.footer{margin-top:auto;display:flex;justify-content:space-between;align-items:center;color:#8a9098;font-size:clamp(9px,.85vw,12px);letter-spacing:.06em}
+.big-number{font-size:clamp(46px,7vw,100px);font-weight:780;line-height:.95;color:var(--navy);letter-spacing:-.07em}
+.split{display:grid;grid-template-columns:1.05fr .95fr;gap:7%;align-items:center;flex:1}
+.definition{border-left:2px solid var(--navy);padding:2% 0 2% 5%;font-size:clamp(14px,1.4vw,21px);line-height:1.65;color:#343942}
+.definition strong{color:var(--ink)}
+.flow{display:grid;grid-template-columns:1fr 1fr;gap:18px 28px;margin-top:5%;align-items:stretch}
+.flow-item{border-top:2px solid var(--navy);padding-top:18px;position:relative}
+.flow-item:not(:last-child):after{display:none}
+.flow-item b{display:block;font-size:clamp(16px,1.7vw,24px);letter-spacing:-.03em;margin-bottom:9px}
+.flow-item span{font-size:clamp(11px,1.1vw,16px);line-height:1.55;color:var(--muted);display:block;max-width:190px}
+.note{font-size:clamp(12px,1.1vw,16px);line-height:1.7;color:var(--muted);margin-top:4%}
+.pillars{display:grid;grid-template-columns:1fr 1fr;gap:0 5%;margin-top:4%;border-top:1px solid var(--line)}
+.pillar{padding:20px 0 23px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:42px 1fr;gap:14px}
+.pillar .n{font-size:13px;color:var(--navy);font-weight:800;padding-top:4px}
+.pillar h3{font-size:clamp(17px,1.8vw,25px);margin:0 0 7px;letter-spacing:-.03em}
+.pillar p{font-size:clamp(12px,1.2vw,17px);line-height:1.6;color:var(--muted)}
+.evidence{display:grid;grid-template-columns:1fr 1fr;gap:5%;align-items:center;flex:1;margin-top:3%}
+.evidence-copy{font-size:clamp(16px,1.8vw,26px);line-height:1.65;max-width:520px}
+.placeholder{border:1px dashed #b9c1ca;min-height:210px;aspect-ratio:1.35;background:#f2f3f4;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:24px;color:#606873}
+.placeholder strong{font-size:clamp(16px,1.7vw,23px);color:#3a424c;margin-bottom:10px}
+.placeholder span{font-size:clamp(11px,1.1vw,15px);line-height:1.65;max-width:330px}
+.closing{margin-top:4%;font-size:clamp(14px,1.4vw,21px);line-height:1.7;color:#4c535d;max-width:850px}
+.progress{position:absolute;left:0;bottom:0;height:3px;background:var(--navy);width:16.667%;transition:width .3s}
+.controls{position:absolute;right:5%;bottom:2.2%;display:flex;gap:12px;align-items:center;z-index:20}
+.controls button{border:0;background:var(--navy);color:#fff;border-radius:999px;width:clamp(54px,10cqw,76px);height:clamp(54px,10cqw,76px);font-size:clamp(27px,5cqw,40px);font-weight:700;cursor:pointer;box-shadow:0 5px 16px #18324b30;display:grid;place-items:center;line-height:1}
+.controls button:hover{background:#274b6a;transform:translateY(-1px)}
+.controls button:disabled{opacity:.28;cursor:default;transform:none}
+.counter{font-size:clamp(11px,2.2cqw,15px);color:#7b828b;min-width:48px;text-align:center;font-variant-numeric:tabular-nums}
+.hint{position:absolute;left:7%;bottom:3.5%;font-size:clamp(9px,1.7cqw,12px);color:#a0a5ac;letter-spacing:.02em}
+.logo-row{display:flex;gap:12px;align-items:center;justify-content:center;margin-top:auto;padding-top:5%;}
+.logo-card{flex:1;min-width:0;min-height:68px;border:1px solid var(--line);border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;padding:10px;}
+.logo-card img{max-width:100%;max-height:42px;object-fit:contain;}
+.logo-card span{font-size:clamp(9px,1.8cqw,13px);line-height:1.35;text-align:center;color:var(--muted)}
+.pillars{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:7%;border:0}
+.pillar{border:1px solid #dfe3e8;border-radius:16px;padding:16px 13px;display:flex;flex-direction:column;gap:8px;background:#fff;min-height:120px;text-align:left;cursor:pointer;box-shadow:0 4px 14px #10182808;transition:transform .18s,border-color .18s,box-shadow .18s}
+.pillar:hover,.pillar:focus-visible{border-color:var(--navy);box-shadow:0 8px 20px #18324b16;transform:translateY(-2px);outline:none}
+.pillar .n{font-size:12px;color:var(--navy);font-weight:800;padding:0}
+.pillar h3{font-size:clamp(17px,3.3cqw,24px);margin:0;letter-spacing:-.03em}
+.pillar p{font-size:clamp(11px,2.3cqw,16px);line-height:1.5;color:var(--muted)}
+.pillar .tap-label{font-size:11px;color:var(--navy);font-weight:700;margin-top:auto}
+.closing-layout{display:grid;grid-template-columns:1fr;gap:5%;flex:1;align-content:center;margin-top:5%}
+.growth-graphic{border-radius:18px;background:#f0f3f6;padding:17px 15px 13px;display:flex;flex-direction:column;gap:10px;min-height:210px;justify-content:center}
+.growth-graphic .graphic-title{font-size:clamp(11px,2.1cqw,15px);color:var(--muted);font-weight:700;letter-spacing:.04em;margin-bottom:2px}
+.growth-step{display:flex;align-items:center;gap:10px}
+.growth-step .step-dot{flex:0 0 28px;height:28px;border-radius:50%;background:var(--navy);color:white;display:grid;place-items:center;font-size:12px;font-weight:800}
+.growth-step .step-bar{height:28px;border-radius:7px;background:#d9e1e8;display:flex;align-items:center;padding:0 10px;font-size:clamp(11px,2.4cqw,16px);font-weight:700;color:#23384b;}
+.growth-step:nth-child(2) .step-bar{width:48%}.growth-step:nth-child(3) .step-bar{width:60%}.growth-step:nth-child(4) .step-bar{width:76%}.growth-step:nth-child(5) .step-bar{width:91%}
+.growth-caption{font-size:clamp(10px,2cqw,14px);line-height:1.5;color:var(--muted);margin-top:2px}
+.modal{position:absolute;inset:0;z-index:50;background:#111d;display:none;align-items:center;justify-content:center;padding:7%;}
+.modal.open{display:flex}
+.modal-panel{width:100%;height:100%;max-height:100%;background:#fff;border-radius:18px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:58px 16px 20px;overflow:hidden}
+.modal-close{position:absolute;top:10px;left:10px;width:52px;height:52px;border:0;border-radius:50%;background:var(--navy);color:#fff;font-size:32px;line-height:1;font-weight:500;cursor:pointer;box-shadow:0 3px 12px #0002}
+.modal-title{font-size:clamp(21px,5cqw,32px);font-weight:800;letter-spacing:-.04em;margin-bottom:12px;text-align:center}
+.modal-image-wrap{width:100%;flex:1;min-height:0;border-radius:12px;background:#f1f3f5;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.modal-image-wrap img{width:100%;height:100%;object-fit:contain;display:block}
+.modal-placeholder{display:none;padding:20px;text-align:center;color:#66707c;line-height:1.7;font-size:14px}
+.modal-description{font-size:13px;color:var(--muted);line-height:1.55;text-align:center;margin-top:12px}
+
+
+/* Revision: vertical layouts and restrained typography */
+.growth-slide .split,
+.evidence-slide .evidence{
+  grid-template-columns:1fr;
+  gap:4%;
+  align-content:center;
+}
+.growth-slide .split > div,
+.evidence-slide .evidence > div{
+  width:100%;
+}
+.growth-slide .placeholder,
+.evidence-slide .placeholder{
+  width:100%;
+  max-width:none;
+  aspect-ratio:2.2;
+  min-height:150px;
+}
+.growth-slide .note{margin-top:2%}
+.evidence-slide .evidence-copy{max-width:none}
+.detail-chart{
+  min-height:250px;
+  padding:18px 22px;
+  background:#f0f3f6;
+  border-radius:18px;
+}
+.detail-chart svg{width:100%;height:auto;display:block}
+.chart-grid line{stroke:#d8dee5;stroke-width:1}
+.chart-line{fill:none;stroke:var(--navy);stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+.chart-area{fill:none;stroke:#cbd5df;stroke-width:18;stroke-linecap:round;stroke-linejoin:round;opacity:.38}
+.chart-dots circle{fill:var(--navy)}
+.controls{bottom:2.2%}
+.footer,.hint{display:none}
+
+@media(max-width:650px){
+  .growth-body,.evidence-body{justify-content:center;}
+  .growth-copy{margin-bottom:5%;}
+  .growth-slide .square-image-slot{width:min(100%, 330px);}
+  .evidence-body{padding-top:3%;}
+  .evidence-slide .image-pair{gap:10px;}
+  .slide{padding:7% 7% 15%;gap:0}
+  .kicker{font-size:clamp(9px,2.2cqw,12px);margin-bottom:5%}
+  h1{font-size:clamp(30px,7.5cqw,44px);line-height:1.14}
+  h2{font-size:clamp(25px,6.4cqw,37px);line-height:1.18}
+  .lead{font-size:clamp(14px,3.6cqw,19px);line-height:1.55;margin-top:4%}
+  .note{font-size:clamp(11px,2.7cqw,14px);line-height:1.55;margin-top:4%}
+  .split,.evidence{grid-template-columns:1fr;gap:5%;align-content:start;margin-top:5%}
+  .growth-slide .split,.evidence-slide .evidence{gap:4%;margin-top:4%;align-content:center}
+  .growth-slide .placeholder,.evidence-slide .placeholder{aspect-ratio:1.8;min-height:125px}
+  .detail-chart{min-height:190px;padding:10px}
+
+  .definition{font-size:clamp(14px,3.6cqw,19px);padding-left:5%}
+  .flow{grid-template-columns:1fr 1fr;gap:13px 10px;margin-top:7%}
+  .flow-item{padding-top:9px;border-top-width:2px}
+  .flow-item:not(:last-child):after{display:none}
+  .flow-item b{font-size:clamp(14px,3.5cqw,19px);margin-bottom:4px}
+  .flow-item span{font-size:clamp(10px,2.5cqw,13px);line-height:1.45}
+  .big-number{font-size:clamp(58px,15cqw,86px)}
+  .placeholder{min-height:140px;aspect-ratio:1.45;padding:15px}
+  .pillars{gap:10px;margin-top:7%}
+  .pillar{padding:13px 11px;min-height:120px;border-radius:14px}
+  .pillar h3{font-size:clamp(16px,4cqw,22px)}
+  .pillar p{font-size:clamp(10px,2.7cqw,14px)}
+  .pillar .tap-label{font-size:10px}
+  .logo-row{gap:8px;padding-top:5%}
+  .logo-card{min-height:58px;padding:7px}
+  .logo-card img{max-height:34px}
+  .footer{font-size:clamp(8px,1.8cqw,10px);padding-top:8%}
+  .hint{display:none}
+  .closing{font-size:clamp(14px,3.6cqw,19px);line-height:1.55}
+  .closing-layout{gap:6%;margin-top:3%}
+  .growth-graphic{min-height:205px;padding:13px;gap:8px}
+  .growth-step .step-dot{flex-basis:24px;height:24px}
+  .growth-step .step-bar{height:25px}
+  .modal{padding:5%}
+  .modal-panel{border-radius:15px;padding:58px 12px 15px}
+}
+@media(prefers-reduced-motion:reduce){.slide{transition:none}}
+
+/* final logo slide */
+.final-logo-slide{
+  background:#000;
+  padding:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.final-logo-slide img{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  width:min(62%, 420px);
+  height:auto;
+  max-height:62%;
+  object-fit:contain;
+  display:block;
+}
+.final-logo-slide.active ~ .controls,
+.final-logo-slide.active ~ .progress{display:none;}
+@media print{
+html,body{display:block;background:#fff;overflow:visible;height:auto}
+#deck{width:100%;height:auto;overflow:visible;box-shadow:none}
+.slide{position:relative;opacity:1;transform:none;pointer-events:auto;width:100%;height:177.7778vw;page-break-after:always}
+.controls,.progress,.hint{display:none}
+}
+
+/* final layout adjustments */
+.slide:not(:first-of-type){
+  align-items:stretch;
+}
+.slide:not(:first-of-type) > h2{
+  flex:0 0 auto;
+}
+.system-slide .system-lead{
+  flex:0 0 auto;
+}
+.system-slide .flow,
+.system-slide .note,
+.system-slide .logo-row{
+  flex:0 0 auto;
+}
+.system-slide .flow{
+  margin-top:6%;
+}
+.system-slide .logo-row{
+  margin-top:5%;
+  padding-top:0;
+}
+.growth-body,
+.evidence-body{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  min-height:0;
+}
+.growth-copy{
+  width:100%;
+  text-align:left;
+  margin-bottom:5%;
+}
+.growth-slide .square-image-slot{
+  width:min(100%, 430px);
+  aspect-ratio:1/1;
+  max-width:430px;
+  flex:0 0 auto;
+}
+.evidence-body{
+  padding-top:4%;
+}
+.evidence-slide .image-pair{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  justify-content:center;
+}
+.evidence-slide .evidence-image{
+  width:100%;
+  aspect-ratio:16/9;
+  flex:0 0 auto;
+}
+
+
+/* page 3, 5: title stays at top, body gets balanced vertical whitespace */
+.system-slide .flow,
+.system-slide .note,
+.system-slide .logo-row{
+  margin-left:0;
+  margin-right:0;
+}
+.system-slide{
+  --body-space: 1;
+}
+.system-slide .flow{
+  margin-top:auto;
+}
+.system-slide .note{
+  margin-top:4%;
+}
+.system-slide .logo-row{
+  margin-top:4%;
+  padding-bottom:4%;
+}
+.system-slide .note{
+  margin-bottom:auto;
+}
+.slide[data-title="역량"] .pillars{
+  margin-top:0;
+  margin-bottom:0;
+  flex:1;
+  align-content:center;
+}
+
+/* revised layout */
+.vertical-split{grid-template-columns:1fr;gap:4%;align-content:center;}
+.vertical-split .definition{max-width:760px;}
+.system-lead{margin-bottom:3%;}
+.image-slot{width:100%;background:#f2f3f4;overflow:hidden;}
+.square-image-slot{aspect-ratio:1/1;max-width:520px;margin:0 auto;}
+.image-slot img{width:100%;height:100%;object-fit:cover;display:block;}
+.pillar{padding:24px 18px 27px;min-height:150px;}
+.pillar h3{font-size:clamp(20px,4.2cqw,29px);}
+.pillar-en{font-size:clamp(10px,2cqw,13px);letter-spacing:.12em;color:var(--navy);font-weight:750;}
+.pillar p{font-size:clamp(13px,2.7cqw,17px);line-height:1.6;}
+.vertical-evidence{grid-template-columns:1fr;gap:4%;align-content:center;}
+.image-pair{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%;}
+.evidence-image{aspect-ratio:1/1;background:#f2f3f4;overflow:hidden;}
+.evidence-image img{width:100%;height:100%;object-fit:cover;display:block;}
+.closing-layout{display:flex;align-items:center;justify-content:center;flex:1;margin-top:0;}
+@media(max-width:650px){
+ .vertical-split{gap:6%;}
+ .square-image-slot{max-width:100%;}
+ .pillar{padding:20px 15px 24px;min-height:155px;}
+ .pillar h3{font-size:clamp(19px,4.8cqw,25px);}
+ .pillar p{font-size:clamp(12px,3cqw,15px);}
+ .vertical-evidence{gap:5%;}
+ .image-pair{gap:10px;}
+}
+</style>
+</head>
+<body>
+<main id="deck" aria-label="밸류체인 교육 발표 자료">
+  <section class="slide active" data-title="오프닝">
+    <div class="kicker">LEARNING · MAKING · GROWING</div>
+    <h1>배움이<br>결과물이 되는<br>교육</h1>
+    <div class="rule"></div>
+    <p class="lead">밸류체인 교육을 통해 경험한<br>성장의 과정과 실제 역량</p>
+  </section>
+  <section class="slide" data-title="PBL">
+    <div class="kicker">01 — THE METHOD</div>
+    <h2>아는 것에서 끝나지 않고,<br>직접 해내는 것까지.</h2>
+    <div class="split vertical-split">
+      <div>
+        <p class="lead">PBL · Project-Based Learning</p>
+        <p class="note">학습자가 질문과 주제를 중심으로 탐구하고, 문제를 해결하며, 실제 결과물을 만들어 가는 프로젝트 기반 학습입니다.</p>
+      </div>
+      <div class="definition"><strong>배운 지식</strong>을<br>직접 활용하고<br><strong>결과물</strong>로 완성하는 과정</div>
+    </div>
+  </section>
+  <section class="slide system-slide" data-title="시스템">
+    <div class="kicker">02 — THE SYSTEM</div>
+    <h2>배움과 실무를 연결하다</h2>
+    <p class="lead system-lead">한 번의 프로젝트가 아니라,<br>배우고 적용하고 개선하는 흐름.</p>
+    <div class="flow">
+      <div class="flow-item"><b>학습</b><span>필요한 지식과 방법을 익힌다</span></div>
+      <div class="flow-item"><b>적용</b><span>프로젝트에 직접 활용한다</span></div>
+      <div class="flow-item"><b>피드백</b><span>멘토의 의견을 듣고 점검한다</span></div>
+      <div class="flow-item"><b>개선·완성</b><span>결과물을 더 나은 형태로 발전시킨다</span></div>
+    </div> 
+    <p class="note">교육이 실제 경험과 결과물로 이어지도록 설계된 과정입니다.</p>
+    <div class="logo-row">
+      <div class="logo-card">
+        <!-- TODO: 펜실베이니아대학교 교육대학원(Penn GSE) 공식 로고 이미지 경로를 아래 src에 입력하세요. -->
+        <img src="images/penn-gse-logo.jpg" alt="펜실베이니아대학교 교육대학원 로고" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+        <span style="display:none">PENN GSE<br>공식 로고 삽입</span>
+      </div>
+      <div class="logo-card">
+        <!-- TODO: Stanford d.school 공식 로고 이미지 경로를 아래 src에 입력하세요. -->
+        <img src="images/stanford-dschool-logo.png" alt="스탠퍼드 D스쿨 로고" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+        <span style="display:none">STANFORD d.school<br>공식 로고 삽입</span>
+      </div>
+    </div>
+  </section>
+  <section class="slide growth-slide" data-title="성장">
+    <div class="kicker">03 — THE JOURNEY</div>
+    <div class="growth-body">
+      <div class="growth-copy">
+        <div class="big-number">11<span style="font-size:.42em;letter-spacing:-.02em">살부터</span></div>
+        <h2 style="margin-top:4%">시작된 성장</h2>
+        <p class="lead">학업과 실무 프로젝트를 연결하며, 배운 것을 직접 구현하는 훈련을 이어 왔습니다.</p>
+      </div>
+      <div class="square-image-slot image-slot">
+        <!-- 이미지 1장 삽입: images/journey-01.jpg -->
+        <img src="images/11.jpeg" alt="성장 과정을 보여 주는 이미지">
+      </div>
+    </div>
+  </section>
+  <section class="slide" data-title="역량">
+    <div class="kicker">04 — THE CAPABILITIES</div>
+    <h2>교육이 만들어 낸 역량</h2>
+    <p class="lead">지식을 아는 데서 멈추지 않고, 실제로 활용하는 힘.</p>
+    <div class="pillars">
+      <button class="pillar" type="button" data-capability="0"><span class="n">01 / THINKING</span><h3>사고력</h3><p>문제를 분석하고 해결 방향을 찾는다.</p></button>
+      <button class="pillar" type="button" data-capability="1"><span class="n">02 / STRUCTURING</span><h3>구조화</h3><p>복잡한 정보와 생각을 정리해 전달한다.</p></button>
+      <button class="pillar" type="button" data-capability="2"><span class="n">03 / EXECUTION</span><h3>실행력</h3><p>아이디어를 구체적인 결과물로 완성한다.</p></button>
+      <button class="pillar" type="button" data-capability="3"><span class="n">04 / COLLABORATION</span><h3>협업력</h3><p>피드백을 주고받으며 함께 결과물을 만든다.</p></button>
+    </div>
+  </section>
+  <section class="slide evidence-slide" data-title="결과물">
+    <div class="kicker">05 — THE EVIDENCE</div>
+    <h2>결과물이 증명하는<br>가치</h2>
+    <div class="evidence-body">
+      <div class="image-pair">
+        <!-- 이미지 2장 삽입: images/evidence-01.jpg, images/evidence-02.jpg -->
+        <div class="evidence-image"><img src="images/evidence-01.jpg" alt="대표 작업물 이미지 1"></div>
+        <div class="evidence-image"><img src="images/evidence-02.jpg" alt="대표 작업물 이미지 2"></div>
+      </div>
+    </div>
+  </section>
+  <section class="slide final-logo-slide" data-title="클로징">
+    <img src="./cdn.imweb.me/thumbnail/20211103/44d417d9ff859.png" alt="로고">
+  </section>
+  <div class="controls">
+    <button id="prev" aria-label="이전 슬라이드" title="이전">←</button>
+    <span class="counter" id="counter">01 / 06</span>
+    <button id="next" aria-label="다음 슬라이드" title="다음">→</button>
+  </div>
+  <div class="progress" id="progress"></div>
+  <div class="modal" id="capabilityModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-panel">
+      <button class="modal-close" id="modalClose" type="button" aria-label="팝업 닫기">×</button>
+      <div class="modal-title" id="modalTitle">사고력</div>
+      <div class="modal-image-wrap">
+        <!-- TODO: 아래 이미지 4개를 실제 작업 사진 경로로 교체하세요. 예: images/capability-01.jpg -->
+        <img id="modalImage" src="images/capability-01.jpg" alt="역량을 보여 주는 작업 사진">
+        <div class="modal-placeholder" id="modalPlaceholder">이 역량을 보여 주는 실제 작업 사진을 넣어 주세요.<br>이미지 경로: <strong id="modalPath">images/capability-01.jpg</strong></div>
+      </div>
+      <p class="modal-description" id="modalDescription">실제 작업물이나 학습 기록을 통해 역량을 보여 주세요.</p>
+    </div>
+  </div>
+</main>
+<script>
+(function(){
+ const slides=[...document.querySelectorAll('.slide')];
+ const counter=document.getElementById('counter');
+ const progress=document.getElementById('progress');
+ let current=0;
+ function show(i){
+   current=Math.max(0,Math.min(slides.length-1,i));
+   slides.forEach((s,n)=>s.classList.toggle('active',n===current));
+   counter.textContent=String(current+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
+   progress.style.width=((current+1)/slides.length*100)+'%';
+   document.getElementById('prev').disabled=current===0;
+   document.getElementById('next').disabled=current===slides.length-1;
+   document.title=slides[current].dataset.title+' — 배움이 결과물이 되는 교육';
+ }
+ document.getElementById('prev').addEventListener('click',()=>show(current-1));
+ document.getElementById('next').addEventListener('click',()=>show(current+1));
+ const modal=document.getElementById('capabilityModal');
+ const modalImage=document.getElementById('modalImage');
+ const modalPlaceholder=document.getElementById('modalPlaceholder');
+ const modalPath=document.getElementById('modalPath');
+ const capabilities=[
+   {title:'사고력',file:'images/01.png',desc:'문제를 분석하고 해결 방향을 찾은 과정'},
+   {title:'구조화',file:'images/02.png',desc:'정보와 생각을 정리해 보고서·기획서로 만든 과정'},
+   {title:'실행력',file:'images/03.png',desc:'아이디어를 실제 결과물로 구현한 작업'},
+   {title:'협업력',file:'images/04.png',desc:'피드백을 주고받고 함께 개선한 과정'}
+ ];
+ function openCapability(index){
+   const item=capabilities[index];
+   document.getElementById('modalTitle').textContent=item.title;
+   document.getElementById('modalDescription').textContent=item.desc;
+   modalImage.style.display='block'; modalPlaceholder.style.display='none';
+   modalPath.textContent=item.file; modalImage.alt=item.title+' 관련 작업 사진';
+   modalImage.src=item.file; modal.classList.add('open');
+   document.getElementById('modalClose').focus();
+ }
+ function closeModal(){modal.classList.remove('open')}
+ document.querySelectorAll('[data-capability]').forEach(btn=>btn.addEventListener('click',()=>openCapability(Number(btn.dataset.capability))));
+ modalImage.addEventListener('error',()=>{modalImage.style.display='none';modalPlaceholder.style.display='block'});
+ document.getElementById('modalClose').addEventListener('click',closeModal);
+ modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
+ document.addEventListener('keydown',e=>{
+   if(e.key==='Escape'&&modal.classList.contains('open')){closeModal();return}
+   if(modal.classList.contains('open'))return;
+   if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(current+1)}
+   if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(current-1)}
+   if(e.key==='Home')show(0);
+   if(e.key==='End')show(slides.length-1);
+   if(e.key.toLowerCase()==='f'){if(!document.fullscreenElement)document.getElementById('deck').requestFullscreen?.();else document.exitFullscreen?.()}
+   if(e.key.toLowerCase()==='p')window.print();
+ });
+ let startX=null;
+ document.getElementById('deck').addEventListener('touchstart',e=>{startX=e.changedTouches[0].clientX},{passive:true});
+ document.getElementById('deck').addEventListener('touchend',e=>{if(startX===null)return;const dx=e.changedTouches[0].clientX-startX;if(Math.abs(dx)>50)show(current+(dx<0?1:-1));startX=null},{passive:true});
+ show(0);
+})();
+</script>
+</body>
+</html>
