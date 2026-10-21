@@ -17,12 +17,12 @@ body{display:grid;place-items:center;overflow:hidden}
 h1,h2,p{margin:0}
 h1{font-size:clamp(30px,4.4vw,64px);line-height:1.15;letter-spacing:-.055em;font-weight:780;max-width:1000px}
 h2{font-size:clamp(26px,3.25vw,48px);line-height:1.18;letter-spacing:-.045em;font-weight:760;max-width:1000px}
-.lead{font-size:clamp(14px,1.35vw,20px);line-height:1.65;color:#424852;margin-top:2.2%;max-width:850px}
+.lead{font-size:clamp(20px,1.35vw,20px);line-height:1.65;color:#424852;margin-top:2.2%;max-width:850px}
 .rule{width:54px;height:4px;background:var(--navy);margin:3.4% 0}
-.footer{margin-top:auto;display:flex;justify-content:space-between;align-items:center;color:#8a9098;font-size:clamp(9px,.85vw,12px);letter-spacing:.06em}
+.footer{margin-top:auto;display:flex;justify-content:space-between;align-items:center;color:#8a9098;font-size:clamp(15px,.85vw,12px);letter-spacing:.06em}
 .big-number{font-size:clamp(46px,7vw,100px);font-weight:780;line-height:.95;color:var(--navy);letter-spacing:-.07em}
 .split{display:grid;grid-template-columns:1.05fr .95fr;gap:7%;align-items:center;flex:1}
-.definition{border-left:2px solid var(--navy);padding:2% 0 2% 5%;font-size:clamp(14px,1.4vw,21px);line-height:1.65;color:#343942}
+.definition{border-left:2px solid var(--navy);padding:2% 0 2% 5%;font-size:clamp(20px,1.4vw,21px);line-height:1.65;color:#343942}
 .definition strong{color:var(--ink)}
 .flow{display:grid;grid-template-columns:1fr 1fr;gap:18px 28px;margin-top:5%;align-items:stretch}
 .flow-item{border-top:2px solid var(--navy);padding-top:18px;position:relative}
@@ -40,18 +40,18 @@ h2{font-size:clamp(26px,3.25vw,48px);line-height:1.18;letter-spacing:-.045em;fon
 .placeholder{border:1px dashed #b9c1ca;min-height:210px;aspect-ratio:1.35;background:#f2f3f4;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:24px;color:#606873}
 .placeholder strong{font-size:clamp(16px,1.7vw,23px);color:#3a424c;margin-bottom:10px}
 .placeholder span{font-size:clamp(11px,1.1vw,20px);line-height:1.65;max-width:330px}
-.closing{margin-top:4%;font-size:clamp(14px,1.4vw,21px);line-height:1.7;color:#4c535d;max-width:850px}
+.closing{margin-top:4%;font-size:clamp(20px,1.4vw,21px);line-height:1.7;color:#4c535d;max-width:850px}
 .progress{position:absolute;left:0;bottom:0;height:3px;background:var(--navy);width:16.667%;transition:width .3s}
 .controls{position:absolute;right:5%;bottom:2.2%;display:flex;gap:12px;align-items:center;z-index:20}
 .controls button{border:0;background:var(--navy);color:#fff;border-radius:999px;width:clamp(54px,10cqw,76px);height:clamp(54px,10cqw,76px);font-size:clamp(27px,5cqw,40px);font-weight:700;cursor:pointer;box-shadow:0 5px 16px #18324b30;display:grid;place-items:center;line-height:1}
 .controls button:hover{background:#274b6a;transform:translateY(-1px)}
 .controls button:disabled{opacity:.28;cursor:default;transform:none}
 .counter{font-size:clamp(11px,2.2cqw,20px);color:#7b828b;min-width:48px;text-align:center;font-variant-numeric:tabular-nums}
-.hint{position:absolute;left:7%;bottom:3.5%;font-size:clamp(9px,1.7cqw,12px);color:#a0a5ac;letter-spacing:.02em}
+.hint{position:absolute;left:7%;bottom:3.5%;font-size:clamp(15px,1.7cqw,12px);color:#a0a5ac;letter-spacing:.02em}
 .logo-row{display:flex;gap:12px;align-items:center;justify-content:center;margin-top:auto;padding-top:5%;}
 .logo-card{flex:1;min-width:0;min-height:68px;border:1px solid var(--line);border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;padding:10px;}
 .logo-card img{max-width:100%;max-height:42px;object-fit:contain;}
-.logo-card span{font-size:clamp(9px,1.8cqw,13px);line-height:1.35;text-align:center;color:var(--muted)}
+.logo-card span{font-size:clamp(15px,1.8cqw,13px);line-height:1.35;text-align:center;color:var(--muted)}
 .pillars{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:7%;border:0}
 .pillar{border:1px solid #dfe3e8;border-radius:16px;padding:16px 13px;display:flex;flex-direction:column;gap:8px;background:#fff;min-height:120px;text-align:left;cursor:pointer;box-shadow:0 4px 14px #10182808;transition:transform .18s,border-color .18s,box-shadow .18s}
 .pillar:hover,.pillar:focus-visible{border-color:var(--navy);box-shadow:0 8px 20px #18324b16;transform:translateY(-2px);outline:none}
@@ -66,7 +66,7 @@ h2{font-size:clamp(26px,3.25vw,48px);line-height:1.18;letter-spacing:-.045em;fon
 .growth-step .step-dot{flex:0 0 28px;height:28px;border-radius:50%;background:var(--navy);color:white;display:grid;place-items:center;font-size:12px;font-weight:800}
 .growth-step .step-bar{height:28px;border-radius:7px;background:#d9e1e8;display:flex;align-items:center;padding:0 10px;font-size:clamp(11px,2.4cqw,16px);font-weight:700;color:#23384b;}
 .growth-step:nth-child(2) .step-bar{width:48%}.growth-step:nth-child(3) .step-bar{width:60%}.growth-step:nth-child(4) .step-bar{width:76%}.growth-step:nth-child(5) .step-bar{width:91%}
-.growth-caption{font-size:clamp(14px,2.8cqw,20px);line-height:1.5;color:var(--muted);margin-top:2px}
+.growth-caption{font-size:clamp(20px,2.8cqw,20px);line-height:1.5;color:var(--muted);margin-top:2px}
 .modal{position:absolute;inset:0;z-index:50;background:#111d;display:none;align-items:center;justify-content:center;padding:7%;}
 .modal.open{display:flex}
 .modal-panel{width:100%;height:100%;max-height:100%;background:#fff;border-radius:18px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:58px 16px 20px;overflow:hidden}
@@ -119,7 +119,7 @@ h2{font-size:clamp(26px,3.25vw,48px);line-height:1.18;letter-spacing:-.045em;fon
   .evidence-body{padding-top:3%;}
   .evidence-slide .image-pair{gap:10px;}
   .slide{padding:7% 7% 15%;gap:0}
-  .kicker{font-size:clamp(14px,3.5cqw,20px);margin-bottom:5%}
+  .kicker{font-size:clamp(20px,3.5cqw,20px);margin-bottom:5%}
   h1{font-size:clamp(45px,11.5cqw,68px);line-height:1.12}
   h2{font-size:clamp(38px,9.8cqw,56px);line-height:1.16}
   .lead{font-size:clamp(21px,5.7cqw,29px);line-height:1.5;margin-top:4%}
@@ -283,7 +283,7 @@ html,body{display:block;background:#fff;overflow:visible;height:auto}
 .image-slot img{width:100%;height:100%;object-fit:cover;display:block;}
 .pillar{padding:24px 18px 27px;min-height:150px;}
 .pillar h3{font-size:clamp(20px,4.2cqw,29px);}
-.pillar-en{font-size:clamp(14px,2.8cqw,18px);letter-spacing:.12em;color:var(--navy);font-weight:750;}
+.pillar-en{font-size:clamp(20px,2.8cqw,18px);letter-spacing:.12em;color:var(--navy);font-weight:750;}
 .pillar p{font-size:clamp(13px,2.7cqw,17px);line-height:1.6;}
 .vertical-evidence{grid-template-columns:1fr;gap:4%;align-content:center;}
 .image-pair{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%;}
@@ -350,7 +350,7 @@ html,body{display:block;background:#fff;overflow:visible;height:auto}
       <div class="growth-copy">
         <div class="big-number">11<span style="font-size:.42em;letter-spacing:-.02em">살부터</span></div>
         <h2 style="margin-top:4%">시작된 성장</h2>
-        <p class="lead">학업과 실무 프로젝트를 연결하며, 배운 것을 직접 구현하는 훈련</p>
+        <p class="lead">학업과 실무 프로젝트를 연결하며, <br>배운 것을 직접 구현하는 훈련</p>
       </div>
       <div class="square-image-slot image-slot">
         <!-- 이미지 1장 삽입: images/journey-01.jpg -->
